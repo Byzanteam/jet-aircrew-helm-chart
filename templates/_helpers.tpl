@@ -53,22 +53,22 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{/*
 Return the proper image name
 */}}
-{{- define "jet-aircrew-helm-chart.image" }}
-{{- $registryName := .Values.image.registry -}}
+{{- define "jet-aircrew-helm-chart.image" -}}
+{{- $registryName := .Values.imageCredentials.registry -}}
 {{- $repositoryName := .Values.image.repository -}}
 {{- $tag := .Values.image.tag | toString -}}
 {{- printf "%s/%s:%s" $registryName $repositoryName $tag -}}
 {{- end }}
 
 {{/* Return the app path */}}
-{{- define "jet-aircrew-helm-chart.app-path" }}
+{{- define "jet-aircrew-helm-chart.app-path" -}}
 {{- $subpath := default "/" .Values.subpath -}}
 {{- $baseUrl := default "/" .Values.baseUrl -}}
 {{- printf "%s/%s" $subpath $baseUrl | clean -}}
 {{- end }}
 
 {{/* Return the assets path */}}
-{{- define "jet-aircrew-helm-chart.assets-path" }}
+{{- define "jet-aircrew-helm-chart.assets-path" -}}
 {{- $subpath := default "/" .Values.subpath -}}
 {{- printf "%s/aircrew" $subpath | clean -}}
 {{- end }}

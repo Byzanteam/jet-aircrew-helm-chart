@@ -1,0 +1,63 @@
+{{- $rules := list }}
+{{- $rules = append $rules (printf "Host(`%s`) && PathPrefix(`%s`)" .Values.aircrewHost (include "jet-aircrew-helm-chart.app-path" .)) }}
+{{- $rules = append $rules (printf "Host(`%s`) && PathPrefix(`%s`)" .Values.aircrewHost (include "jet-aircrew-helm-chart.assets-path" .)) }}
+
+{{/* Middlewares for web ingress-routes */}}
+{{- $webMiddlewares := list }}
+{{- $webMiddlewares = append $webMiddlewares "strip-prefix" }}
+{{- $webMiddlewares = append $webMiddlewares "compress" }}
+{{- if .Values.aircrewTLSSecret | empty | not }}
+{{- $webMiddlewares = append $webMiddlewares "redirect-to-https" }}
+{{- end }}
+
+{{/* Middlewares for websecure ingress-routes */}}
+{{- $websecureMiddlewares := list }}
+{{- $websecureMiddlewares = append $webMiddlewares "strip-prefix" }}
+{{- $websecureMiddlewares = append $webMiddlewares "compress" }}
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ include "jet-aircrew-helm-chart.fullname" . }}-web
+spec:
+  entryPoints:
+    - web
+  routes:
+    {{- range $rules }}
+    - match: {{ . }}
+      kind: Rule
+      services:
+        - name: {{ include "jet-aircrew-helm-chart.fullname" $ }}
+          port: 80
+      middlewares:
+        {{- range $webMiddlewares }}
+        - name: {{ include "jet-aircrew-helm-chart.fullname" $ }}-{{ . }}
+        {{- end}}
+    {{- end }}
+
+---
+
+{{- if .Values.aircrewTLSSecret | empty | not }}
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ include "jet-aircrew-helm-chart.fullname" . }}-websecure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    {{- range $rules }}
+    - match: {{ . }}
+      kind: Rule
+      services:
+        - name: {{ include "jet-aircrew-helm-chart.fullname" $ }}
+          port: 80
+      middlewares:
+        {{- range $websecureMiddlewares }}
+        - name: {{ include "jet-aircrew-helm-chart.fullname" $ }}-{{ . }}
+        {{- end}}
+      tls: {}
+    {{- end }}
+  tls:
+    secretName: {{ include "jet-aircrew-helm-chart.fullname" $ }}-tls-secret
+{{- end }}
