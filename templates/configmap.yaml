@@ -7,7 +7,7 @@ metadata:
 data:
   PROD: "true"
   BASE_URL: {{ include "jet-aircrew-helm-chart.app-path" . }}
-  JET_ENDPODINT: {{ .Values.jetEndpoint }}
+  JET_ENDPOINT: {{ .Values.jetEndpoint }}
   SENTRY_DSN: {{ .Values.sentryDsn | quote }}
   SENTRY_RELEASE: {{ .Values.sentryRelease | quote }}
   APP_ASSETS_ENDPOINT: {{ .Values.appAssetsEndpoint }}
