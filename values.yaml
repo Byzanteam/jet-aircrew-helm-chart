@@ -35,12 +35,13 @@ nodeSelector: {}
 aircrewHost: aircrew.jet.localhost
 aircrewTLSSecret:
 
+# Frontend environments
 subpath: /
 baseUrl: /
 jetEndpoint: https://jet.work
 sentryDsn: ""
 sentryRelease: ""
-appAssetsEndpoint: "https://oss.jet.work/minio-public"
+appAssetsEndpoint: https://oss.jet.work/minio-public
 # 是否展示主页
 enableHomepage: false
 applicationName: Jet Aircrew
