@@ -16,10 +16,8 @@ spec:
         {{- include "jet-aircrew-helm-chart.selectorLabels" . | nindent 8 }}
         app: {{ template "jet-aircrew-helm-chart.fullname" . }}
     spec:
-      {{- with .Values.image.imagePullSecrets }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        - name: {{ include "jet-aircrew-helm-chart.fullname" . }}-docker-registry-secret
       containers:
         - name: {{ .Chart.Name }}
           image: {{ include "jet-aircrew-helm-chart.image" . }}
