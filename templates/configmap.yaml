@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "jet-aircrew-helm-chart.fullname" . }}
+  labels:
+    {{- include "jet-aircrew-helm-chart.labels" . | nindent 4 }}
+data:
+  BASE_URL: {{ .Values.baseUrl }}
+  SENTRY_DSN: {{ .Values.sentryDsn | quote }}
+  HOST: {{ .Values.jetHost }}
+  SSL: {{ .Values.jetSSL | quote }}

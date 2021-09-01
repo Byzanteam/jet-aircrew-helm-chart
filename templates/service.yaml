@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "jet-aircrew-helm-chart.fullname" . }}
+  labels:
+    {{- include "jet-aircrew-helm-chart.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "jet-aircrew-helm-chart.selectorLabels" . | nindent 4 }}
+    app: {{ template "jet-aircrew-helm-chart.fullname" . }}
