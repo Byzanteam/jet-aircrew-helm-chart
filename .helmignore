@@ -21,3 +21,6 @@
 .idea/
 *.tmproj
 .vscode/
+
+values.local.yaml
+.env
