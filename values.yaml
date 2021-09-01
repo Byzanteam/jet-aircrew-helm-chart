@@ -28,7 +28,23 @@ resources: {}
 nodeSelector: {}
 
 # Application
+subpath: /
 baseUrl: /
+jetEndpoint: https://jet.work
 sentryDsn: ""
-jetHost: workflow.jet.work
-jetSSL: true
+sentryRelease: ""
+appAssetsEndpoint: "https://oss.jet.work/minio-public"
+# 是否展示主页
+enableHomepage: false
+applicationName: Jet Aircrew
+
+# ICP 备案文案
+ICPRecord: ""
+# ICP 备案指向链接
+ICPRecordLink:  ""
+# 公安部备案文案
+cyberSecurityRecord: ""
+# 公安部备案指向链接
+cyberSecurityRecordLink: ""
+
+localeDomain: default

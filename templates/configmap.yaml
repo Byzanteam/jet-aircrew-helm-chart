@@ -5,7 +5,18 @@ metadata:
   labels:
     {{- include "jet-aircrew-helm-chart.labels" . | nindent 4 }}
 data:
-  BASE_URL: {{ .Values.baseUrl }}
+  PROD: "true"
+  BASE_URL: {{ include "jet-aircrew-helm-chart.app-path" . }}
+  JET_ENDPODINT: {{ .Values.jetEndpoint }}
   SENTRY_DSN: {{ .Values.sentryDsn | quote }}
-  HOST: {{ .Values.jetHost }}
-  SSL: {{ .Values.jetSSL | quote }}
+  SENTRY_RELEASE: {{ .Values.sentryRelease | quote }}
+  APP_ASSETS_ENDPOINT: {{ .Values.appAssetsEndpoint }}
+  ENABLE_HOMEPAGE: {{ .Values.enableHomepage | quote }}
+  APPLICATION_NAME: {{ .Values.applicationName }}
+
+  ICP_RECORD: {{ .Values.ICPRecord | quote }}
+  ICP_RECORD_LINK: {{ .Values.ICPRecordLink | quote }}
+  CYBER_SECURITY_RECORD: {{ .Values.cyberSecurityRecord | quote }}
+  CYBER_SECURITY_RECORD_LINK: {{ .Values.cyberSecurityRecordLink | quote }}
+
+  LOCALE_DOMAIN: {{ .Values.localeDomain }}
